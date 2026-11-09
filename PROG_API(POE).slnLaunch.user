@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "PROG_API(POE)\\PROG_API(POE).csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "PROG_MVC(Consume_API)\\PROG_MVC(Consume_API).csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
