@@ -250,3 +250,10 @@ RaceDay SA is an API-driven sports event management system built using ASP.NET C
 The project demonstrates the separation of responsibilities between an ASP.NET Core Web API and an ASP.NET Core MVC application. The API manages data and database operations, while the MVC application provides the user interface and communicates with the API through HTTP requests.
 
 This architecture creates a structured and maintainable approach to building a full-stack web application.
+
+##CI/CD Workflow screenshot
+<img width="954" height="551" alt="Workflow,PROG" src="https://github.com/user-attachments/assets/4605267c-05f9-4383-be34-0af88e57cb61" />
+
+## Youtube Video Presentation Link
+https://youtu.be/05FedTveofU?si=eDnaCPt4s9KLLS9q
+
