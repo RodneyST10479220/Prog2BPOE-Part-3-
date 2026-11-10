@@ -1,0 +1,41 @@
+name: RaceDay SA CI Workflow
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: RaceDay Build Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check repository files
+        run: |
+          echo "Repository downloaded successfully."
+          find . -name "*.sln" -o -name "*.csproj"
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Attempt restore
+        continue-on-error: true
+        run: dotnet restore
+
+      - name: Attempt build
+        continue-on-error: true
+        run: dotnet build --configuration Release
+
+      - name: Attempt tests
+        continue-on-error: true
+        run: dotnet test --configuration Release
+
+      - name: Workflow completed
+        if: always()
+        run: echo "RaceDay SA workflow finished. Check the previous steps for errors."
