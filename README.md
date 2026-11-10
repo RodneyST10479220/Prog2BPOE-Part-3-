@@ -1,177 +1,252 @@
-1. Project Overview
+# RaceDay SA
 
-RaceDay SA is an ASP.NET Core Web API developed using C# and SQL Server. The system is designed to manage running, walking, and cycling events. It allows users to register and log in as participants or event organisers.
+## Project Overview
 
-The API provides endpoints for managing user profiles and race events. Swagger UI is used to test the API endpoints during development.
+RaceDay SA is a sports event and race management system designed to help users manage and interact with racing events.
 
-2. Technologies Used
+The system allows users to register and log in to the application, view and manage their profiles, and interact with racing events. The project consists of two separate ASP.NET Core applications:
 
-C# – Main programming language.
+- An ASP.NET Core Web API
+- An ASP.NET Core MVC application
 
-ASP.NET Core Web API (.NET 8) – Used to build the API.
+The MVC application acts as the user interface and communicates with the Web API using HTTP requests. The MVC application does not directly access the database. All database operations and business logic are handled by the API.
 
-Microsoft SQL Server LocalDB – Stores application data.
+## System Architecture
 
-Microsoft.Data.SqlClient – Connects the application to the database.
+The project follows an API-driven architecture.
 
-BCrypt – Used to hash passwords and verify login credentials.
+The flow of the application is:
 
-Swagger / OpenAPI – Provides an interface for testing API endpoints.
+MVC Application → Web API → Database
 
-3. How the Program Works
+The MVC application sends requests to the Web API using `HttpClient`. The API processes the requests, performs the required database operations, and returns responses to the MVC application.
 
-User Registration
+This approach separates the user interface from the database and business logic.
 
-New users can register by providing their required details, including their name, email address, password, and account role.
+## Technologies Used
 
-The system supports two account roles:
+The project was developed using:
 
-Participant: A user who takes part in race events.
+- C#
+- ASP.NET Core Web API
+- ASP.NET Core MVC
+- SQL Server
+- Entity Framework Core
+- HTML
+- CSS
+- JavaScript
+- HTTP Client
+- Swagger
 
-Organizer: A user who creates and manages race events.
+## Web API
 
-Passwords are hashed before being stored in the database.
+The Web API is responsible for handling the application's data and database operations.
 
-User Login
+The API manages functionality such as:
 
-Registered users can log in using their email address and password. The system checks the submitted credentials against the stored user information.
+- User registration
+- User login
+- User profile retrieval
+- User profile updates
+- Creating events
+- Retrieving events
+- Updating events
+- Managing event information
 
-For password verification, the system uses BCrypt to compare the submitted password with the stored password hash.
+The API communicates with the SQL Server database and returns data to the MVC application.
 
-User Profile Management
+Swagger can be used to test and interact with the available API endpoints.
 
-Users can retrieve and update their profile information through the API.
+## MVC Application
 
-Profile information may include their name, email address, contact number, and password, depending on the fields supported by the endpoint.
+The MVC application provides the user interface for RaceDay SA.
 
-Event Management
+Instead of directly connecting to the database, the MVC application communicates with the Web API using `HttpClientFactory`.
 
-Event organisers can manage race events after their organiser credentials have been verified.
+The MVC application is responsible for:
 
-The event management functionality includes:
+- Displaying the RaceDay SA homepage
+- Providing registration functionality
+- Providing login functionality
+- Displaying user profile information
+- Displaying event information
+- Creating events
+- Updating event information
+- Providing a user-friendly interface for interacting with the system
 
-GET: Retrieve all available events.
+## User Registration
 
-GET by ID: Retrieve details of a specific event.
+Users can create an account by providing the required registration information.
 
-POST: Create a new event.
+The MVC application sends the registration information to the Web API. The API processes the request and stores the user's information in the database.
 
-PUT: Update an existing event.
+After successful registration, the user can access their profile.
 
-DELETE: Delete an event, provided that the operation is permitted and the event has no database constraints preventing deletion.
+## User Login
 
-The API checks the organiser's credentials and uses the organiser's database ID to help ensure that organisers can only update or delete their own events.
+Existing users can log into the system using their account details.
 
-Events may contain information such as the event title, description, date, location, distance, and event type, depending on the database schema.
+The MVC application sends the login information to the Web API for validation. The API checks the user's information and returns the appropriate response.
 
-4. Database Structure
+After successful authentication, the user can access the relevant features of the system.
 
-The application uses a SQL Server database named Race_DB.
+## User Profile
 
-The main database tables include:
+The application includes a user profile section where users can view their account information.
 
-Users: Stores user account details, email addresses, password hashes, and roles.
+The profile functionality retrieves user information through the Web API instead of accessing the database directly.
 
-Participant: Stores participant-specific information and links participants to their user accounts.
+Users can also update their profile information through the system.
 
-EventOrganizer: Stores organiser information and links organisers to their user accounts.
+## Event Management
 
-Event: Stores race event information and identifies the organiser responsible for each event.
+RaceDay SA allows users to interact with racing events.
 
-Category: Stores categories associated with race events.
+The event functionality includes:
 
-Route: Stores route information associated with race events.
+- Viewing available events
+- Viewing detailed event information
+- Creating new events
+- Updating event information
+- Accessing event action buttons
 
-The database uses primary keys and foreign keys to identify records and maintain relationships between related tables.
+The MVC application retrieves event data from the Web API.
 
-5. API Testing with Swagger
+## Event Display
 
-Swagger UI allows developers to test the API without first creating a separate frontend application.
+Events are displayed in the MVC application in an organised format.
 
-To run the project:
+The event interface includes collapsible sections that allow users to view an event name and expand it to see additional event details.
 
-Open the solution in Visual Studio.
+This helps keep the interface clean while still allowing users to access the full information about each event.
 
-Ensure that the required .NET 8 SDK and SQL Server LocalDB are installed.
+## Create Event
 
-Confirm that the database Race_DB exists and that the connection string matches your local database setup.
+The Create Event functionality allows users to enter information for a new racing event.
 
-Run the project using Visual Studio.
+The MVC application collects the event information and sends it to the Web API.
 
-Open the Swagger UI page displayed by the application.
+The Web API processes the request and performs the required database operation.
 
-Select an endpoint, click Try it out, enter the required information, and click Execute.
+## Update Event
 
-Review the HTTP response to determine whether the request succeeded.
+The project includes an Update Event interface.
 
-For endpoints that accept form data, enter the required values in the Swagger form fields.
+Users can access event information and interact with the available update functionality through the MVC application.
 
-6. Database Connection
+The MVC application communicates with the Web API to handle event-related operations.
 
-The application connects to SQL Server LocalDB using a connection string similar to:
+## Database
 
-Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Race_DB;Integrated Security=True;
+The database is managed through the Web API.
 
-Ensure that your database and table names match those used in the application code.
+The MVC application does not contain direct database access.
 
-7. HTTP Response Codes
+This means that database connections, SQL operations, and business logic are handled by the API, while the MVC project focuses on displaying information and providing the user interface.
 
-The API uses HTTP status codes to communicate the result of requests.
+## Project Structure
 
-Status code
+The project consists of two main applications.
 
-Meaning
+### API Project
 
-200 OK
+The API project contains:
 
-The request was successful.
+- Models
+- Controllers
+- Database configuration
+- API endpoints
+- User functionality
+- Event functionality
+- Database operations
 
-201 Created
+### MVC Project
 
-A new event was created successfully.
+The MVC project contains:
 
-400 Bad Request
+- Controllers
+- Views
+- HTML and CSS
+- User interface functionality
+- `HttpClient` communication with the API
 
-The request contains invalid information.
+## API Communication
 
-401 Unauthorized
+The MVC application uses `HttpClientFactory` to communicate with the Web API.
 
-Valid credentials are required.
+The general process works as follows:
 
-404 Not Found
+1. A user interacts with the MVC application.
+2. The MVC controller receives the request.
+3. The MVC application sends an HTTP request to the Web API.
+4. The API processes the request.
+5. The API communicates with the database when necessary.
+6. The API returns a response.
+7. The MVC application displays the result to the user.
 
-The requested record was not found or the operation was not permitted for that record.
+## How to Run the Project
 
-500 Internal Server Error
+### Requirements
 
-An unexpected server-side error occurred.
+Before running the project, make sure the following software is installed:
 
-8. Security
+- Visual Studio
+- SQL Server or SQL Server LocalDB
+- .NET SDK compatible with the project
 
-The application uses BCrypt password hashing to avoid storing passwords as plain text. Organiser credentials are checked before protected event management operations are performed.
+### Running the API
 
-Database commands should use SQL parameters to reduce the risk of SQL injection. In a production environment, credentials should be stored securely, and detailed exception messages should not be exposed to API clients.
+1. Open the API project in Visual Studio.
+2. Ensure the database connection is correctly configured.
+3. Run the API project.
+4. Confirm that the API is running successfully.
+5. Swagger can be used to test the API endpoints.
 
-9. Future Improvements
+### Running the MVC Application
 
-Possible improvements include:
+1. Open the MVC project in Visual Studio.
+2. Ensure that the API base URL is correctly configured.
+3. Make sure the Web API is running.
+4. Run the MVC application.
+5. Open the application in the browser.
 
-Building a frontend for participants and organisers.
+The MVC application will communicate with the Web API to retrieve and manage data.
 
-Adding participant event registration and enrolment functionality.
+## Key Design Principle
 
-Implementing race result management.
+A key requirement of the project is the separation between the MVC application and the database.
 
-Expanding event category and route management.
+The MVC application:
 
-Introducing token-based authentication and role-based authorisation.
+- Does not directly access the database.
+- Does not contain duplicated database logic.
+- Uses HTTP requests to communicate with the API.
 
-Adding automated tests and improved API documentation.
+The Web API is responsible for:
 
-10. Conclusion
+- Database access
+- Data processing
+- Application logic
+- Returning responses to the MVC application
 
-RaceDay SA demonstrates the development of a RESTful API using C#, ASP.NET Core Web API, and SQL Server. It provides a foundation for user account management and race event administration while allowing developers to test the functionality through Swagger UI.
+## Future Improvements
 
-## CI/CD Workflow Screenshot
+Possible future improvements include:
 
-![CI/CD Workflow](screenshots/ProgWorkflow.png)
+- Completing full event update functionality
+- Completing event deletion functionality
+- Adding event categories
+- Adding participant enrolment functionality
+- Adding race results
+- Adding authentication and authorisation improvements
+- Improving error handling
+- Improving validation
+- Adding additional responsive design features
+
+## Conclusion
+
+RaceDay SA is an API-driven sports event management system built using ASP.NET Core technologies.
+
+The project demonstrates the separation of responsibilities between an ASP.NET Core Web API and an ASP.NET Core MVC application. The API manages data and database operations, while the MVC application provides the user interface and communicates with the API through HTTP requests.
+
+This architecture creates a structured and maintainable approach to building a full-stack web application.
